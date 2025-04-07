@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:TourBuddy.ViewModels"
+             x:Class="TourBuddy.Views.LoginPage"
+             x:DataType="vm:LoginViewModel"
+             Title="{Binding Title}"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="*,Auto,Auto,*" 
+          ColumnDefinitions="*,*"
+          Padding="20"
+          RowSpacing="15"
+          ColumnSpacing="10">
+
+        <!-- App Title -->
+        <VerticalStackLayout Grid.Row="0" Grid.ColumnSpan="2" VerticalOptions="Center">
+            <Label Text="Tour Buddy" 
+                   FontSize="32" 
+                   FontAttributes="Bold" 
+                   HorizontalOptions="Center" />
+            <Label Text="Login" 
+                   FontSize="20" 
+                   HorizontalOptions="Center" 
+                   Margin="0,5,0,0" />
+        </VerticalStackLayout>
+
+        <!-- Error Message -->
+        <Label Grid.Row="1" 
+               Grid.ColumnSpan="2" 
+               Text="{Binding ErrorMessage}" 
+               TextColor="Red" 
+               HorizontalOptions="Center"
+               IsVisible="{Binding HasError}" />
+
+        <!-- Form -->
+        <VerticalStackLayout Grid.Row="2" Grid.ColumnSpan="2" Spacing="15">
+            <Entry Placeholder="Email Address" 
+                   Text="{Binding Email}" 
+                   Keyboard="Email" 
+                   ReturnType="Next" />
+
+            <Entry Placeholder="Password" 
+                   Text="{Binding Password}" 
+                   IsPassword="True" 
+                   ReturnType="Done" />
+
+            <Button Text="Log In" 
+                    Command="{Binding LoginCommand}" 
+                    IsEnabled="{Binding IsBusy, Converter={StaticResource InverseBoolConverter}}" />
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}" 
+                               IsVisible="{Binding IsBusy}" 
+                               HorizontalOptions="Center" />
+        </VerticalStackLayout>
+
+        <!-- Footer Links -->
+        <Button Grid.Row="3" 
+                Grid.Column="0" 
+                Text="Create Account" 
+                Command="{Binding GoToRegisterCommand}" 
+                VerticalOptions="End" />
+
+        <Button Grid.Row="3" 
+                Grid.Column="1" 
+                Text="Forgot Password" 
+                Command="{Binding GoToForgotPasswordCommand}" 
+                VerticalOptions="End" />
+
+    </Grid>
+</ContentPage>

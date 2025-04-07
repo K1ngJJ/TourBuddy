@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:TourBuddy.ViewModels"
+             x:Class="TourBuddy.Views.ProfilePage"
+             x:DataType="vm:ProfileViewModel"
+             Title="{Binding Title}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <!-- Header -->
+            <Frame BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray950}}"
+                   Padding="15"
+                   CornerRadius="10"
+                   HasShadow="True"
+                   Margin="0,10,0,10">
+                <VerticalStackLayout>
+                    <Label Text="My Account" 
+                           FontSize="24" 
+                           FontAttributes="Bold" 
+                           TextColor="White" 
+                           HorizontalOptions="Center" />
+
+                    <Label Text="{Binding CurrentUser.Username, StringFormat='Username: {0}'}" 
+                           TextColor="White" 
+                           HorizontalOptions="Center" 
+                           Margin="0,10,0,5" />
+
+                    <Label Text="{Binding CurrentUser.Email, StringFormat='Email: {0}'}" 
+                           TextColor="White" 
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Error Message -->
+            <Label Text="{Binding ErrorMessage}" 
+                   TextColor="Red" 
+                   HorizontalOptions="Center"
+                   IsVisible="{Binding HasError}" />
+
+            <!-- Change Password Section -->
+            <Frame Padding="15" CornerRadius="10" HasShadow="True">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Change Password" 
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           HorizontalOptions="Center" 
+                           Margin="0,0,0,10" />
+
+                    <Label Text="Current Password" />
+                    <Entry Placeholder="Enter your current password" 
+                           Text="{Binding CurrentPassword}" 
+                           IsPassword="True" 
+                           ReturnType="Next" />
+
+                    <Label Text="New Password" />
+                    <Entry Placeholder="Enter your new password" 
+                           Text="{Binding NewPassword}" 
+                           IsPassword="True" 
+                           ReturnType="Next" />
+
+                    <Label Text="Confirm Password" />
+                    <Entry Placeholder="Confirm your new password" 
+                           Text="{Binding ConfirmPassword}" 
+                           IsPassword="True" 
+                           ReturnType="Done" />
+
+                    <Button Text="Change Password" 
+                            Command="{Binding ChangePasswordCommand}" 
+                            Margin="0,10,0,0"
+                            IsEnabled="{Binding IsPasswordChanging, Converter={StaticResource InverseBoolConverter}}" />
+
+                    <ActivityIndicator IsRunning="{Binding IsPasswordChanging}" 
+                                       IsVisible="{Binding IsPasswordChanging}" 
+                                       HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Sync Section -->
+            <Frame Padding="15" CornerRadius="10" HasShadow="True">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Synchronization" 
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           HorizontalOptions="Center" 
+                           Margin="0,0,0,10" />
+
+                    <Label Text="{Binding SyncStatus}" 
+                           HorizontalOptions="Center" 
+                           IsVisible="{Binding SyncStatus, Converter={StaticResource StringToBoolConverter}}" />
+
+                    <Button Text="Sync Data" 
+                            Command="{Binding SyncDataCommand}" 
+                            IsEnabled="{Binding IsSyncing, Converter={StaticResource InverseBoolConverter}}" />
+
+                    <ActivityIndicator IsRunning="{Binding IsSyncing}" 
+                                       IsVisible="{Binding IsSyncing}" 
+                                       HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Logout Button -->
+            <Button Text="Log Out" 
+                    Command="{Binding LogoutCommand}" 
+                    BackgroundColor="Red" 
+                    TextColor="White" 
+                    Margin="0,20,0,0" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

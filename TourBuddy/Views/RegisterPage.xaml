@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:TourBuddy.ViewModels"
+             x:Class="TourBuddy.Views.RegisterPage"
+             x:DataType="vm:RegisterViewModel"
+             Title="{Binding Title}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <!-- Header -->
+            <Label Text="Create Account" 
+                   FontSize="28" 
+                   FontAttributes="Bold" 
+                   HorizontalOptions="Center" 
+                   Margin="0,10,0,20" />
+
+            <!-- Error Message -->
+            <Label Text="{Binding ErrorMessage}" 
+                   TextColor="Red" 
+                   HorizontalOptions="Center"
+                   IsVisible="{Binding HasError}" />
+
+            <!-- Form -->
+            <Label Text="Username" />
+            <Entry Placeholder="Enter your username" 
+                   Text="{Binding Username}" 
+                   ReturnType="Next" />
+
+            <Label Text="Email Address" />
+            <Entry Placeholder="Enter your email address" 
+                   Text="{Binding Email}" 
+                   Keyboard="Email" 
+                   ReturnType="Next" />
+
+            <Label Text="Password" />
+            <Entry Placeholder="Enter your password" 
+                   Text="{Binding Password}" 
+                   IsPassword="True" 
+                   ReturnType="Next" />
+
+            <Label Text="Confirm Password" />
+            <Entry Placeholder="Confirm your password" 
+                   Text="{Binding ConfirmPassword}" 
+                   IsPassword="True" 
+                   ReturnType="Done" />
+
+            <Label Text="The password must be at least 8 characters long, include at least one uppercase letter, one lowercase letter, and one number." 
+                   FontSize="12" 
+                   TextColor="Gray" />
+
+            <!-- Register Button -->
+            <Button Text="Register" 
+                    Command="{Binding RegisterCommand}" 
+                    Margin="0,20,0,0"
+                    IsEnabled="{Binding IsBusy, Converter={StaticResource InverseBoolConverter}}" />
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}" 
+                               IsVisible="{Binding IsBusy}" 
+                               HorizontalOptions="Center" />
+
+            <!-- Back to Login -->
+            <Button Text="Back to Login" 
+                    Command="{Binding GoBackCommand}" 
+                    BackgroundColor="Transparent" 
+                    TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
